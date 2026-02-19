@@ -3,6 +3,8 @@ import Icon from "@/components/ui/icon";
 interface SidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
+  username?: string;
+  onLogout?: () => void;
 }
 
 const NAV_ITEMS = [
@@ -14,7 +16,7 @@ const NAV_ITEMS = [
   { id: "support", label: "Поддержка", icon: "MessageCircle" },
 ];
 
-const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
+const Sidebar = ({ activeTab, onTabChange, username, onLogout }: SidebarProps) => {
   return (
     <aside className="w-64 border-r border-border bg-card flex flex-col h-screen sticky top-0">
       <div className="p-5 border-b border-border">
@@ -52,10 +54,18 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
             <Icon name="User" size={14} className="text-muted-foreground" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-foreground truncate">Трейдер #48291</p>
+            <p className="text-xs font-medium text-foreground truncate">{username || "Пользователь"}</p>
             <p className="text-[10px] text-muted-foreground">Верифицирован</p>
           </div>
-          <div className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+              title="Выйти"
+            >
+              <Icon name="LogOut" size={14} />
+            </button>
+          )}
         </div>
       </div>
     </aside>
